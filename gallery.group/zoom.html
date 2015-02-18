@@ -1,0 +1,151 @@
+<!-- 
+// Segment_1 = /gallery
+// Segment_2 = /group
+// Segment_3 = name
+// Segment_4 = row count
+// Segment_5 = entry id
+// Segment_6 = name group
+// Segment_7 = view_all
+-->
+
+<script type="text/javascript">
+
+	gallery.catTitles = {};
+
+</script>
+
+<?php $thisThumbId = '{segment_3}{segment_5}'; ?>
+
+<div id="zoomContent_<?php echo $thisThumbId; ?>" style="padding-top: 48px; padding-bottom: 48px;">
+
+	{exp:channel:entries
+
+		channel = "image"
+		limit = "1"
+		entry_id = "{segment_5}"
+		status = "Print|Licensing"
+		dynamic = "no"
+		disable = "pagination|category_fields|member_data"
+
+	}
+		
+		<!--//// TITLE ////-->
+		<div class="container">
+
+			<div style="display: table-cell; vertical-align: top; text-align: left;" align="left">
+				<div align="left">
+						
+					<div id="catTitles_<?php echo $thisThumbId; ?>"></div>
+
+					{categories
+
+						show_group = "{names}"
+						show = "not {view_all}"
+						backspace = "7"
+
+					}
+
+						<!-- save artist name + id to the object -->
+						<script type="text/javascript">
+
+							gallery.addTitle('{category_name}','{category_id}');
+
+						</script>
+					
+					{/categories}
+
+					<script type="text/javascript">
+
+						gallery.getHTML('catTitles_<?php echo $thisThumbId; ?>');
+
+					</script>
+
+					<span style="text-transform: none;">
+						{categories show_group="{place}" limit="1"}{category_name}{/categories}
+						{categories show_group="{when}" limit="1"},&nbsp;{category_name}{/categories}
+					</span>
+
+				</div>
+			</div>
+
+			<!-- CLOSE -->
+			{if segment_4 != "{cancel}"}
+				<div style="display: table-cell; vertical-align: top;" align="right">
+					<div class="closeBox" style="float: right;" onclick="javascript: gallery.closeThisZoom();">X</div>
+				</div>
+			{/if}
+
+			</div>
+			
+			<!--//// IMAGE ////-->
+			<?php
+				$imageurl ="{image:full}";
+				list($width,$height) = getimagesize("$imageurl");
+			?>
+
+			<div class="container" style="padding-top: 96px; padding-bottom: 96px;" align="center">
+				<div align="center">
+					<div class="zoomImage" style="width: <?php echo $width, 'px; height: ', $height, 'px;"><img src="{image:full}" height="', $height, '" width="', $width; ?>"></div>
+				</div>
+			</div>
+
+		<!-- IMG CODE -->
+		<div class="container zoomTitle" align="left">{title}</div>
+
+	{/exp:channel:entries}
+
+	{exp:channel:entries
+
+		channel = "image"
+		limit = "1"
+		entry_id = "{segment_5}"
+		status = "Print|Licensing"
+		dynamic = "no"
+		disable = "pagination|category_fields|member_data"
+
+	}
+
+		<div class="container" style="padding-top: 48px; padding-bottom: 48px; text-align: left;" align="left">
+
+			{if "{status}" == "Print"}
+				<!-- PRINT DETAILS if available print -->
+				<div id="printInfo_<?php echo $thisThumbId; ?>" class="container" style="height: 190px;">
+					<div style="float: left; padding-right: 6px;"><img src="{site_url}graphics/site/loading.gif" width="16" height="16"></div>
+					<div style="float: left;">searching for available prints</div>
+				</div>
+
+				<div class="container" style="padding-bottom: 20px;" align="left">
+					<span style="text-transform: none;">
+						Print sizes up to 20x24 are printed on silver gelatin paper. However, a very small number of prints are only available as archival pigment prints as well as all prints sizes 32x40 or larger.
+						Prices are subject to change without prior notification. Please contant us by eMail ( <a href="mailto: mail@hermanleonard.com">mail@hermanleonard.com</a> ) or Telephone (818) 509-8987 for pricing and availability.
+					</span>
+				</div>
+
+				<!-- Load print details -->
+				<script type="text/javascript"> toolbox.loadLocation('#printInfo_<?php echo $thisThumbId; ?>','{site_url}index.php/gallery/info_prints/{segment_3}/{segment_4}/{segment_5}'); </script>
+			{/if}  
+
+			<!-- LICENSING DETAILS if available licensing -->
+			<div class="container" align="left">
+				<span style="text-transform: none;">Please eMail ( <a href="mailto: mail@hermanleonard.com">mail@hermanleonard.com</a> ) or Telephone (818) 509-8987 for licensing information.</span>
+			</div>
+
+		</div>
+
+	{/exp:channel:entries}
+
+	<script type="text/javascript">
+
+		// Segment_3 = Category Id
+		// Segment_4 = Row Count
+		// Segment_5 = Entry Id
+
+		gallery.loadComplete('{segment_3}','{segment_4}','{segment_5}');
+
+	</script>
+	
+</div>
+
+{exp:remember_me:set entry_id="{segment_5}"}
+
+<script type="text/javascript" language="javascript"> lightbox.refreshLightbox('recents'); </script>

@@ -1,0 +1,123 @@
+<div id="categories" class="categories" align="center">
+
+	<div class="container categoriesCellTxt" style="height: 65px;">
+		<div style="display: table-cell; height: 65px; vertical-align: middle;">
+			<div align="left">
+
+				{embed="gallery/group"}
+
+			</div>
+		</div>
+	</div>
+	
+	<div id="categoryNamesBox">
+
+		{exp:channel:categories
+
+			channel = "image"
+			category_group = "{segment_3}"
+			show_empty = "no"
+			status = "{segment_5}"
+			style = "linear"
+			disable = "category_fields"
+
+		}
+
+			<!-- save artist name + id to the object -->
+			<script type="text/javascript">
+
+				category.addName('{category_name}','{category_id}','{site_url}index.php/gallery/{segment_2}/{segment_3}/{category_id}/{segment_5}');
+
+			</script>
+
+		{/exp:channel:categories}
+
+		<div id="categoryContainer" class="container categoriesCellTxt" style="padding-bottom: 25px;"></div>
+
+		<script type="text/javascript">
+
+			// get the content
+			category.getHTML('#categoryContainer',category.catNamesCount);
+
+			// Get the height of the div to slide open
+			category.totalNames = category.getColMax(category.catNamesCount);
+			category.totalHeight = category.totalNames*18;
+
+		</script>
+			
+	</div>
+	
+</div>
+
+<!--
+// Segment_1 = /gallery
+// Segment_2 = genre category
+// Segment_3 = name category group
+// Segment_4 = name category
+// Segment_5 = availability status
+-->
+<div class="thumbnails">
+	<div class="shadowDivider sortByTxt" align="center" >
+		<div style="display: table; width: 960px; padding-top: 16px; padding-bottom: 16px;">
+
+			<div style="float: left;">
+				
+				<!-- view Names -->
+				<div class="sortByCell">
+					<div>
+						<div class="sortByCell">
+							<span id="nameBoxControl" class="sortByTxt pointer" onclick="javascript: category.categoryBoxCheck('categoryNamesBox','nameBoxControl');">Show Names</span>
+						</div>
+					</div>
+				</div>
+				
+				<!-- view All -->
+				<div class="sortByCell">
+					<div style="padding-left: 26px;">
+						<div class="sortByCell" style="padding-right: 2px;">
+							<div class="categoriesCell{if segment_4 == embed:view_all}Active{if:else}Inactive{/if}Box"></div>
+						</div>
+						<div class="sortByCell">
+							<span class="sortByTxt pointer" onclick="javascript: toolbox.docLocation('{site_url}index.php/gallery/{segment_2}/{segment_3}/{embed:view_all}/{segment_5}');">View All {embed:genre}</span>
+						</div>
+					</div>
+				</div>
+				
+				<!-- open names if licensing -->
+				{if segment_5 != 'Print'}<script type="text/javascript"> category.categoryBoxCheck('categoryNamesBox','nameBoxControl'); </script>{/if}
+
+			</div>
+
+			<div style="float: right;">
+
+				<!-- view available prints -->
+				{if segment_3 != "{new_images}"}
+					<div class="sortByCell" style="padding-left: 40px;">
+						<div style="padding-left: 26px;">
+							<div class="sortByCell" style="padding-right: 2px;">
+								<div class="categoriesCell{if segment_5 == 'Print'}Active{if:else}Inactive{/if}Box"></div>
+							</div>
+							<div class="sortByCell"><span {if segment_5 == 'Print'}class="categoriesCellTxtActive"
+														  {if:else}class="sortByTxt pointer" onclick="javascript: toolbox.docLocation('{site_url}index.php/gallery/{segment_2}/{segment_3}/{embed:view_all}/Print');"
+														  {/if}>Prints</span></div>
+						</div>
+					</div>
+				{/if}
+
+				<!-- view all licensing -->
+				<div class="sortByCell">
+					<div style="padding-left: 26px;">
+						<div class="sortByCell" style="padding-right: 2px;">
+							<div class="categoriesCell{if segment_5 == 'Print|Licensing'}Active{if:else}Inactive{/if}Box"></div>
+						</div>
+						<div class="sortByCell"><span {if segment_5 == 'Print|Licensing'}class="categoriesCellTxtActive"
+													  {if:else}class="sortByTxt pointer" onclick="javascript: toolbox.docLocation('{site_url}index.php/gallery/{segment_2}/{segment_3}/{embed:view_all}/Print|Licensing');"
+													  {/if}>Licensing</span></div>
+					</div>
+				</div>
+				
+			</div>
+
+		</div>
+	</div>
+</div>

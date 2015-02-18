@@ -1,0 +1,48 @@
+{exp:channel:entries
+
+	channel = "exhibit"
+	orderby = "expiration_date"
+	status = "open"
+	sort = "desc"
+	show_future_entries = "yes"
+	show_expired = "no"
+	dynamic = "no"
+	disable = "pagination|category_fields|member_data"
+
+}
+	
+	<div style="display: table; width: 1056px; height: 352px;" align="left">
+
+		<div class="thumbCell">
+			<div class="exhibit">
+			
+				<div class="thumbBox thumbBoxAni thumbDate{if current_time > expiration_date}Weak
+														  {if:elseif current_time < entry_date}Dim
+														  {if:else}Strong{/if}" style="width: 252px; height: 252px;">
+					<div style="display: table-cell; padding: 20px; width: 216px; height: 216px; vertical-align: middle; text-align: center;">
+						<span class="thumbTitle" style="text-transform: none; font-size: 24px;">{entry_date format="%F %d, %Y"}</span><br>
+						<span class="thumbTitle" style="text-transform: none; font-size: 14px;">{if expiration_date}thru {expiration_date format="%F %d, %Y"}{/if}</span><br>
+						<br>
+						{if current_time > expiration_date}<span style="text-transform: lowercase; font-size: 20px;">closed</span>
+						{if:elseif current_time < entry_date}<span style="text-transform: lowercase; font-size: 20px;">scheduled</span>
+						{if:else}<span style="text-transform: lowercase; font-size: 20px;">showing now</span>{/if}
+					</div>
+				</div>
+			
+			</div>
+		</div>
+
+		<div class="thumbCell" style="vertical-align: top;">
+			<div class="exhibitInfoBox">
+				<div class="exhibitInfoBoxSpacer">
+					<span class="thumbTitle" style="text-transform: none; font-size: 24px;">{title}</span><br>
+					<span style="text-transform: uppercase;">{exhibit_location}</span><br>
+					<br>
+					{exhibit_description}
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+{/exp:channel:entries}

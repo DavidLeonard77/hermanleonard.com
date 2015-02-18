@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+	{embed="global/stage" title="{site_name}"}
+<body>
+
+	<!-- LOGIN -->
+	<div id="overlayDimmer" class="loginAni" onclick="javascript: loginHide();"></div>
+
+	<div id="loginSubmit" class="overlayContainer loginContainer">
+		<div class="overlayBox" style="height: 300px;">
+			<div class="overlaySpacer" style="height: 300px;" align="center">
+			
+				<div style="padding-bottom: 48px; margin-left: -4px;"><span class="headerTitle" style="text-transform: none;">Herman Leonard</span></div>
+				
+				{if logged_in}
+
+					<div class="headerTitle" style="font-size: 18px; margin-bottom: 24px;">you are currently logged in as <span style="font-weight: 700;">{screen_name}</span></div>
+
+					<div class="formSubmitTxt" style="display: table-cell; padding: 16px;" onclick="javaScript: window.location = '{path=logout}';">logout</div>
+
+				{if:else}
+
+					{exp:member:login_form name="loginSubmit" return="{path=default}"}
+						<input type="text" name="username" value="" placeholder="Username" class="loginInputField"><br>
+						<input type="password" name="password" value="" placeholder="Password" class="loginInputField"><br>
+						<div class="formSubmitTxt" style="display: table-cell; padding: 16px;" onclick="javaScript: document.loginSubmit.submit()">login</div>
+					{/exp:member:login_form}
+			
+				{/if}
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

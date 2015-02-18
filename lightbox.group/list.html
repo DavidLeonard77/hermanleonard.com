@@ -1,0 +1,35 @@
+<div style="width: 972px;">
+
+<div style="position: absolute; width: 960px;">
+	<div style="float: left; margin-top: -28px;">
+		<div class="recentlyViewedTxtCell recentlyViewedTxt recentlyViewedTxtLink" style="display: table-cell; padding-bottom: 2px;" {if segment_3 == "favorites"}onclick="javascript: lightbox.clearItems('{segment_3}');">CLEAR ALL ITEMS</div>
+			{if:else}onclick="javascript: clearItems('recents');">CLEAR ALL RECENTLY VIEWED</div>
+				{if logged_in}
+					<div class="recentlyViewedTxtCell recentlyViewedTxt recentlyViewedTxtLink" style="display: table-cell; padding-bottom: 2px; padding-left: 12px;" onclick="javascript: lightbox.addAll('favorites');">SAVE ALL TO YOUR FAVORITES</div>
+				{/if}
+			{/if}
+	</div>
+</div>
+
+<script type="text/javascript" language="javascript"> lightbox.totalResults = '0'; </script>
+
+{if segment_4 != ""}
+	{exp:channel:entries dynamic="no" entry_id="{segment_4}" fixed_order="{segment_4}" status="Print|Licensing" limit="9" disable="pagination|category_fields|member_data"}
+
+		{if count == "1"}<script type="text/javascript" language="javascript"> lightbox.totalResults = '{total_results}'; </script>{/if}
+		
+		<div id="{segment_3}_{entry_id}" style="float: right; width: 90px; padding-top: 6px; padding-right: 12px;"></div>
+		<script type="text/javascript" language="javascript"> toolbox.loadLocation('#{segment_3}_{entry_id}','{site_url}index.php/lightbox/item_thumb_{segment_3}/{entry_id}'); </script>
+
+	{/exp:channel:entries}
+{if:else}
+
+	<div style="display: table; width: 960px; padding-top: 40px; text-align: center;" align="center">you have no items in your lightbox</div>
+
+{/if}
+
+<script type="text/javascript" language="javascript">
+	lightbox.setLightboxCount('count_{segment_3}','&nbsp;(' + lightbox.totalResults + ')');
+</script>
+
+</div>

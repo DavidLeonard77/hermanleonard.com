@@ -1,0 +1,30 @@
+{exp:channel:entries
+
+	channel = "exhibit"
+	orderby = "expiration_date"
+	status = "Permanent Exhibit"
+	sort = "desc"
+	show_future_entries = "no"
+	show_expired = "yes"
+	dynamic = "no"
+	disable = "pagination|category_fields|member_data"
+
+}
+	{if count == "1"}
+		<div style="display: table; width: 1056px; padding-bottom: 20px;" align="center">
+			<div class="thumbTitleBox" style="text-align: center; text-transform: uppercase;">permanent exhibits</div>
+		</div>
+	{/if}
+
+	<div style="display: table; width: 1056px;" align="left">
+		<div class="exhibitInfoBox" style="width: 1056px; height: auto; padding: 40px;">
+			<span class="thumbTitle" style="text-transform: none; font-size: 24px;">{title}</span><br>
+			<span style="text-transform: uppercase;">{exhibit_location}</span><br>
+			{if exhibit_description != ""}
+				<br>
+				{exhibit_description}
+			{/if}
+		</div>
+	</div>
+
+{/exp:channel:entries}

@@ -1,0 +1,13 @@
+{exp:channel:entries
+
+	url_title = "{segment_3}"
+	dynamic = "no"
+	disable = "pagination|category_fields|member_data"
+	status = "Print|Licensing"
+
+}
+
+	<span style="text-transform: uppercase; font-size: 18px;">{categories show_group="{jazz}" show="not {view_all_jazz}" backspace="7"}{category_name},&nbsp;{/categories}</span><br>
+	{categories show_group="{place}" limit="1"}{category_name}{/categories}{categories show_group="{when}" limit="1"},&nbsp;{category_name}{/categories}
+
+{/exp:channel:entries}

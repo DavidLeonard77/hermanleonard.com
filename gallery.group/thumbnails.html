@@ -1,0 +1,95 @@
+{if logged_in}<script> gallery.allowed = true; </script>{/if}
+
+<?php $colCount = 1; ?>
+
+<!-- load the thumbnails based on genre, name, and availability - only show pagination values
+
+// Segment_1 = /gallery
+// Segment_2 = /thumbnails
+// Segment_3 = genre
+// Segment_4 = name group
+// Segment_5 = view all
+// Segment_6 = name
+// Segment_7 = availability
+// Segment_8 = startCount
+// Segment_9 = endCount
+-->
+
+{exp:channel:entries
+
+	channel = "image"
+	category = "{segment_6}"
+	status = "{segment_7}"
+	offset = "{segment_8}"
+	limit = "{segment_9}"
+	orderby = "title"
+	sort = "asc"
+	dynamic = "no"
+	disable = "pagination|category_fields|member_data"
+
+}
+
+	<?php if ($colCount == 1) { echo '<div style="width: 1056px;" align="left">'; } ?>
+
+	<!-- only show title if it's the first time and page 1 -->
+	{if count == 1 && segment_8 == "0"}
+		<div style="width: auto; margin-top: -96px;" align="center">
+			<div class="container" style="padding-top: 24px; padding-bottom: 24px;">
+				<div class="thumbTitleBox">
+					{categories show="{segment_6}" limit="1"}{category_name}{/categories}
+				</div>
+			</div>
+		</div>
+	{/if}
+
+	<!-- get the row count and group id to create a unique zoom div id -->
+	<?php
+		$rowCount = {absolute_count} - $colCount;
+		$catId = '{segment_6}';
+		$entryId = '{entry_id}';
+
+		echo '<script type="text/javascript"> function loadZoom_', $entryId, ' () { gallery.loadZoom(\'{site_url}index.php/gallery/zoom/', $catId, '/', $rowCount, '/', $entryId, '/{segment_4}/{segment_5}', '\',\'', $catId, '\',\'', $rowCount, '\',\'', $entryId, '\'); } </script>';
+	?>
+
+	<!-- create the thumbnail and pass the zoom div id -->
+	<div class="thumbCell">
+		<div class="thumb">
+
+			<div class="thumbBox"><img src="{image:big}" width="256" height="256"></div>
+
+			<div id="thumbDimmer_<?php echo $catId, $entryId; ?>" class="thumbBox thumbDimmer thumbInactive"></div>
+
+			<div id="thumbLoading_<?php echo $catId, $entryId; ?>" class="thumbBox thumbBoxAni thumbInactive">
+				<div style="display: table-cell; padding: 20px; width: 216px; height: 216px; vertical-align: middle; text-align: center;">
+					<span class="thumbTitle" style="text-transform: lowercase; font-size: 18px;">loading image</span>
+				</div>
+			</div>
+
+			<div id="thumbInfo_<?php echo $catId, $entryId; ?>" class="thumbBox thumbBoxAni thumbInfo" onclick="javascript: loadZoom_<?php echo $entryId; ?>();">
+				<div style="display: table-cell; padding: 20px; width: 216px; height: 216px; vertical-align: middle; text-align: center;">
+					<span class="thumbTitle">{categories show_group="{segment_4}" show="not {segment_5}" backspace="7"}{category_name},&nbsp;{/categories}</span><br>
+					{categories show_group="{place}" backspace="7"}{category_name},&nbsp;{/categories}{categories show_group="{when}" limit="1"},&nbsp;{category_name}<br>{/categories}
+
+					<div id="imgCode_<?php echo $catId, $entryId; ?>" style="text-transform: uppercase;"></div>
+
+					<script type="text/javascript"> gallery.thumbTitle('<?php echo $catId, $entryId; ?>','{title}'); </script>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<?php
+		$ar = {count};
+		$tr = {total_results};
+		 
+		/* check if its time for a zoom div */
+		if (($colCount == 3) || ($ar == $tr)) {
+			echo '</div><div class="zoomBackground"><div id="', $catId, $rowCount, '" class="zoom zoomTxt" align="center"></div></div>';
+			$colCount = 1; }
+		else { $colCount = $colCount+1; }
+	?>
+
+{/exp:channel:entries}
+
+<script type="text/javascript"> gallery.loadMoreStatus(); </script>

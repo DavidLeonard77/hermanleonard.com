@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	{embed="global/stage" title="{site_name}"}
+</head>
+
+<style type="text/css">
+
+	body { padding-top: 130px; }
+
+</style>
+
+<body>
+
+	<!-- HEADER -->
+	<div style="position: fixed; top: 0px; width: 100%; z-index: 1000;">
+		{embed="global/header"}
+	</div>
+
+	<div style="width: auto;">
+		
+		<!-- CATEGORIES -->
+		{embed="exhibits/categories"}
+
+		<!-- THUMBNAILS -->
+
+		<div class="thumbnails">
+			<div class="shadowDivider" style="padding-top: 48px; padding-bottom: 72px;" align="center">
+
+				{if segment_2 == "permanent"}
+					{embed="exhibits/exhibits_permanent"}
+
+				{if:elseif segment_2 == "past"}
+					{embed="exhibits/exhibits_past"}
+
+				{if:else}
+					{embed="exhibits/exhibits_current"}
+				{/if}
+
+			</div>
+		</div>
+
+	</div>
+
+	<!-- FOOTER -->
+	{embed="global/footer"}
+
+</body>
+</html>

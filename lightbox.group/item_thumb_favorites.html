@@ -1,0 +1,14 @@
+{exp:channel:entries channel="image" entry_id="{segment_3}" status="Print|Licensing" dynamic="no" limit="1" disable="pagination|category_fields|member_data"}
+
+	{categories show_group="{names}" limit="1"}
+		<div class="pinnedThumb" style="width: 90px; height: 90px; padding: 0px;" onclick="javascript: toolbox.docLocation('{site_url}index.php/gallery/detail/{category_id}/{cancel}/{segment_3}');">
+			<img src="{image:thumb}" width="90" height="90">
+		</div>
+	{/categories}
+
+	<div class="recentlyViewedTxt recentlyViewedTxtLink" style="width: 90px; padding-top: 2px;" onclick="javascript: lightbox.removeItems('{segment_3}','favorites');" align="center">
+		<div class="recentlyViewedTxtCell" style="padding-right: 2px;"><img src="{site_url}graphics/site/mini_remove.png" width="9" height="9"></div>
+		<div class="recentlyViewedTxtCell" style="padding-bottom: 2px;">remove</div>
+	</div>
+	
+{/exp:channel:entries}

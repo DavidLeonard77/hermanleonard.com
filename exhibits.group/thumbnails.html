@@ -1,0 +1,70 @@
+{exp:channel:entries
+
+	channel = "exhibit_print"
+	category = "{segment_3}"
+	offset = "{segment_4}"
+	limit = "{segment_5}"
+	orderby = "title"
+	sort = "asc"
+	dynamic = "no"
+	disable = "pagination|category_fields|member_data"
+
+}
+	
+	<div style="display: table; width: 1056px; height: 352px;" align="left">
+
+		<!-- get the row count and group id to create a unique zoom div id -->
+		<?php
+			$rowCount = {absolute_count};
+			$catId = '{segment_3}';
+			$entryId = '{exhibit_image:entry_id}';
+		?>
+
+		<!-- create the thumbnail and zoom div -->
+
+		<div class="thumbCell">
+
+			<div class="exhibitThumb">
+
+				<div class="thumbBox"><img src="{exhibit_image:image:big}" width="256" height="256"></div>
+
+				<div id="thumbDimmer_<?php echo $catId, $entryId; ?>" class="thumbBox thumbDimmer thumbInactive"></div>
+
+				<div id="thumbLoading_<?php echo $catId, $entryId; ?>" class="thumbBox thumbBoxAni thumbInactive">
+					<div style="display: table-cell; padding: 20px; width: 216px; height: 216px; vertical-align: middle; text-align: center;">
+						<span class="thumbTitle" style="text-transform: lowercase; font-size: 18px;">loading image</span>
+					</div>
+				</div>
+
+				<div id="thumbInfo_<?php echo $catId, $entryId; ?>" class="thumbBox thumbBoxAni thumbInfo" onclick="javascript: gallery.loadZoom('{site_url}index.php/gallery/zoom/<?php echo $catId, '/', $rowCount, '/', $entryId, '\',\'', $catId, '\',\'', $rowCount, '\',\'', $entryId; ?>');">
+					<div style="display: table-cell; padding: 20px; width: 216px; height: 216px; vertical-align: middle; text-align: center; color: #3c3c3c;"><span class="thumbTitle">{exhibit_image:title}</span></div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="thumbCell" style="vertical-align: top;">
+			<div class="exhibitInfoBox">
+				<div class="exhibitInfoBoxSpacer" style="color: #cdcdcd;">
+
+					<span style="text-transform: uppercase;">{exhibit_image:title}</span><br>
+					<br>
+					<div id="thumb_{exhibit_image:url_title}"></div>
+					<script> toolbox.loadLocation('#thumb_{exhibit_image:url_title}','{site_url}index.php/exhibits/image/{exhibit_image:url_title}'); </script>
+					<br>
+					{categories show_group="5" limit="1"}{category_name}{/categories}<br>
+					<br>
+					<span style="text-transform: uppercase;">frame size: </span>{categories show_group="8" limit="1"}{category_name}{/categories}
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+			
+	<?php echo '<div class="zoomBackground"><div id="', $catId, $rowCount, '" class="zoom zoomTxt" align="center"></div></div>'; ?>
+
+{/exp:channel:entries}
+		
+<script type="text/javascript"> gallery.loadMoreStatus(); </script>

@@ -1,0 +1,146 @@
+
+<div class="thumbnails">
+	<div id="thumbnailBox" class="shadowDivider" style="padding-bottom: 72px;" align="center">
+		
+		<div class="sortByTxt" style="display: table; width: 960px; padding-top: 16px; padding-bottom: 16px;">
+			<div style="float: right;">
+
+				{exp:channel:categories
+
+					channel = "exhibit_print"
+					category_group = "{exhibit}"
+					style = "linear"
+					disable = "category_fields"
+
+				}
+
+					<div class="sortByCell">
+						<div style="padding-left: 26px;">
+							<div class="sortByCell" style="padding-right: 2px;"><div class="categoriesCell{if segment_3 == category_id}Active{if:else}Inactive{/if}Box"></div></div>
+							<div class="sortByCell"><span {if segment_3 == category_id}class="categoriesCellTxtActive"{if:else}class="sortByTxt pointer" onclick="javascript: toolbox.docLocation('{site_url}index.php/exhibits/rental/{category_id}');"{/if}>{category_name}</span></div>
+						</div>
+					</div>
+
+				{/exp:channel:categories}
+				
+			</div>
+		</div>
+
+		{exp:channel:entries
+
+			channel = "exhibit"
+			category = "{segment_3}"
+			status = "Traveling Exhibit"
+			limit = "1"
+			orderby = "expiration_date"
+			sort = "desc"
+			show_future_entries = "yes"
+			show_expired = "yes"
+			dynamic = "no"
+			disable = "pagination|category_fields|member_data"
+
+		}
+
+			<div style="display: table; width: 1056px; height: 352px;" align="left">
+		
+				<div class="thumbCell">
+					<div class="exhibit">
+				
+						<div class="thumbBox thumbBoxAni thumbDate{if current_time > expiration_date}Strong
+																  {if:elseif current_time < entry_date}Dim
+																  {if:else}Weak{/if}" style="width: 252px; height: 252px;">
+							<div style="display: table-cell; padding: 20px; width: 216px; height: 216px; vertical-align: middle; text-align: center;">
+							
+								{if current_time < expiration_date}
+									<span class="thumbTitle" style="text-transform: none; font-size: 24px;">{entry_date format="%F %d, %Y"}</span><br>
+									<span class="thumbTitle" style="text-transform: none; font-size: 14px;">{if expiration_date}thru {expiration_date format="%F %d, %Y"}{/if}</span><br>
+									<br>
+								{/if}
+								
+								{if current_time > expiration_date}<span style="text-transform: lowercase; font-size: 20px;">available</span>
+								{if:elseif current_time < entry_date}<span style="text-transform: lowercase; font-size: 20px;">scheduled</span>
+								{if:else}<span style="text-transform: lowercase; font-size: 20px;">{exhibit_location}</span>{/if}
+								
+							</div>
+						</div>
+				
+					</div>
+				</div>
+
+				<div class="thumbCell" style="vertical-align: top;">
+					<div class="exhibitInfoBox">
+						<div class="exhibitInfoBoxSpacer" style="color: #cdcdcd;">
+							<span class="thumbTitle" style="text-transform: none; font-size: 24px;">{title}</span><br>
+							<br>
+							{exhibit_description}
+						</div>
+					</div>
+				</div>
+
+			</div>
+		{/exp:channel:entries}
+
+		<!-- INITIALIZE AND GET THE TOTAL IMAGE COUNT -->
+		<?php $imageCount = 0; ?>
+
+		<!-- get the total count -->
+		{exp:channel:entries
+
+			channel = "exhibit_print"
+			category = "{segment_3}"
+			orderby = "title"
+			sort = "asc"
+			dynamic = "no"
+			disable = "pagination|category_fields|member_data"
+
+		}<?php $imageCount = {absolute_results}; ?>{/exp:channel:entries}
+
+		<!-- save save the total image count -->
+		<script type="text/javascript">
+			gallery.imageCount = <?php echo $imageCount; ?>;
+		</script>
+
+		<!-- CREATE THE PAGES -->
+		<?php
+			// Total number of pages based on how many images per page
+			$incrementTotal = 18;
+			$pageCountTotal = ceil($imageCount/$incrementTotal);
+
+			// Initialize the page count
+			$thisPageCount = 1;
+
+			// CREAT THE DIVS WHILE THIS PAGE COUNT IS LESS OR EQUAL TO TOTAL PAGE COUNT
+			while ( $thisPageCount <= $pageCountTotal ) {
+				echo '
+				<div id="thumbnails_', $thisPageCount, '"></div>';
+				$thisPageCount = $thisPageCount+1;
+			}
+		?>
+
+		<!-- save the page count, increment value, and coloumns -->
+		<script type="text/javascript">
+			gallery.incrementTotal = <?php echo $incrementTotal; ?>;
+			gallery.pageCountTotal = <?php echo $pageCountTotal; ?>;
+			gallery.imageColoumns = 0;
+		</script>
+		
+		<div id="loadMoreBoxSpacer" class="container" style="overflow: hidden; padding-top: 24px; padding-bottom: 48px;">
+			<div id="loadMoreBox" class="loadMoreBox loadMore" onclick="javascript: gallery.loadMore(gallery.moreUrl); toolbox.classReplacer('loadMoreBox', 'loadMoreBox');">load more images</div>
+			<div id="loadingMoreBox" class="loadMoreBox">loading images</div>
+		</div>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	// next page url
+	gallery.moreUrl = '{site_url}index.php/exhibits/thumbnails/{segment_3}/';
+
+	// lazy load with until checkTheEnd returns true
+	$(window).scroll(function(){
+		var checkTheEnd = gallery.endCheck(gallery.pageCount,gallery.pageCountTotal);
+		if (($(window).scrollTop() == $(document).height() - $(window).height()) && (checkTheEnd == false)){ gallery.loadMore(gallery.moreUrl); }
+	});
+
+</script>

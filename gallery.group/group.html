@@ -1,0 +1,38 @@
+{exp:channel:categories
+
+	channel="image"
+	category_group="{genre}"
+	style="linear"
+
+}
+
+	<!-- CREATE NAMES OBJECT (names only count if image exists)
+	// Segment_1 = /gallery
+	// Segment_2 = genre category
+	// Segment_3 = name category group
+	// Segment_4 = name category
+	// Segment_5 = availability status
+	-->
+
+	<?php
+
+		$nameGroup;
+		$viewAll = '{category_description}';
+		$status = 'Print|Licensing';
+
+			 if ( $viewAll == '{view_all_jazz}') { $nameGroup = '{jazz}'; $status = 'Print'; }
+		else if ( $viewAll == '{view_all_celebrities}') { $nameGroup = '{celebrities}'; }
+		else if ( $viewAll == '{view_all_reportage}') { $nameGroup = '{reportage}'; }
+		else if ( $viewAll == '{view_all_fashion_nudes}') { $nameGroup = '{fashion_nudes}'; }
+		else if ( $viewAll == '{view_all_new_orleans}') { $nameGroup = '{new_orleans}'; }
+		else if ( $viewAll == '{view_all_rock_pop_blues}') { $nameGroup = '{rock_pop_blues}'; }
+		else if ( $viewAll == '{view_all_new_images}') { $nameGroup = '{new_images}'; }
+
+	?>
+
+	<div class="categoriesTitle" style="display: table-cell; padding-right: 40px;">
+		{if segment_2 == category_id}<span class="categoriesCellTxtActive">{category_name}</span>
+							{if:else}<a href="{site_url}index.php/gallery/{category_id}/<?php echo $nameGroup; ?>/{category_description}/<?php echo $status; ?>">{category_name}</a>{/if}
+	</div>
+
+{/exp:channel:categories}

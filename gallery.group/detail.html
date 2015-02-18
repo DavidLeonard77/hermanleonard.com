@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	{embed="global/stage" title="{site_name}"}
+
+	<script src="{site_url}scripts/jquery.ez-pinned-footer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="{path=gallery/script}" type="text/javascript" charset="utf-8"></script>
+	<script src="{path=lightbox/script}" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<style type="text/css">
+
+	body { padding-top: 130px; }
+
+</style>
+
+<body>
+
+	<!-- HEADER -->
+	<div style="position: fixed; top: 0px; width: 100%; z-index: 1000;">
+		{embed="global/header"}
+	</div>
+
+	<div style="width: auto; background-color: #222222;" align="center">
+
+		<script type="text/javascript">
+
+			gallery.imageCount = 1;
+			gallery.pageCountTotal = 1;
+			gallery.pageCount = 1;
+			gallery.theEnd = true;
+			gallery.imageColoumns = 0;
+
+		</script>
+
+		<!-- CATEGORIES -->
+		<div id="categories" class="categories" align="center">
+			<div class="container categoriesCellTxt" style="height: 65px;">
+				<div style="display: table-cell; height: 65px; vertical-align: middle;">
+					<div align="left">
+
+						{embed="gallery/group"}
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- DETAIL -->
+		<div id="thumbnailBox" class="thumbnails" style="padding-bottom: 72px;" align="center">
+			<div id="thumbLoading_{segment_3}{segment_5}" class="thumbBox thumbBoxAni thumbInactive"></div>
+			<div id="{segment_3}{segment_4}" class="zoom zoomTxt" align="center"></div>
+
+			<script type="text/javascript"> toolbox.loadLocation('#{segment_3}{segment_4}','{site_url}index.php/gallery/zoom/{segment_3}/{segment_4}/{segment_5}'); </script>
+
+			<div id="loadMoreBoxSpacer" class="container" style="overflow: hidden; padding-top: 24px; padding-bottom: 48px;">
+				<div id="loadingMoreBox" class="loadMoreBox">loading image</div>
+
+				<script type="text/javascript"> gallery.loadMoreStatus(); </script>
+			</div>
+		</div>
+		
+	</div>
+
+	<!-- FOOTER -->
+	<div id="footerBox" class="footerBox" style="padding-top: 0px;" align="center">
+		{embed="global/footer"}
+	</div>
+
+	<!-- LIGHTBOX -->
+	{embed="lightbox/index"}
+
+</body>
+</html>

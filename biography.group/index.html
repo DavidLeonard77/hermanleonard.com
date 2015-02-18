@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	{embed="global/stage" title="{site_name}"}
+</head>
+
+<body>
+
+	<!-- HEADER -->
+	<div style="position: fixed; top: 0px; width: 100%; z-index: 1000;">
+		{embed="global/header"}
+	</div>
+
+	<!-- CONTENT -->
+
+	<div class="contact contactTxt" style="width: auto; background-color: #222222; margin-top: 130px;" align="center">
+		<div class="container" style="padding-top: 96px; padding-bottom: 96px; text-align: justify;">
+			<span class="bioTitle">Biography</span><br>
+			<br>
+			{exp:channel:entries channel="biography" limit="1" sort="asc" dynamic="no" disable="pagination|category_fields|member_data"}
+				<span style="font-size: 15px;">{biography_text}</span>
+			{/exp:channel:entries}
+		</div>
+	</div>
+
+	<!-- FOOTER -->
+	{embed="global/footer"}
+
+</body>
+</html>

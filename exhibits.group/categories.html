@@ -1,0 +1,33 @@
+<div id="categories" class="categories" align="center">
+
+	<div class="container categoriesCellTxt" style="height: 65px;">
+		<div style="display: table-cell; height: 65px; vertical-align: middle;">
+			<div align="left">
+
+				<div class="categoriesTitle" style="display: table-cell; padding-right: 80px;">
+					{if segment_2 == "current"}<span class="categoriesCellTxtActive">new exhibits</span>
+					{if:else}<a href="{path='exhibits/current'}">new exhibits</a>{/if}
+				</div>
+
+				<div class="categoriesTitle" style="display: table-cell; padding-right: 80px;">
+					{if segment_2 == "permanent"}<span class="categoriesCellTxtActive">permanent exhibits</span>
+					{if:else}<a href="{path='exhibits/permanent'}">permanent exhibits</a>{/if}
+				</div>
+
+				<div class="categoriesTitle" style="display: table-cell; padding-right: 80px;">
+					{if segment_2 == "past"}<span class="categoriesCellTxtActive">past exhibits</span>
+					{if:else}<a href="{path='exhibits/past'}">past exhibits</a>{/if}
+				</div>
+
+				{if logged_in}
+					<div class="categoriesTitle" style="display: table-cell; padding-right: 80px;">
+						{if segment_2 == "rental"}<span class="categoriesCellTxtActive">traveling exhibits</span>
+						{if:else}<a href="{path='exhibits/rental/26'}">traveling exhibits</a>{/if}
+					</div>
+				{/if}
+
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,64 @@
+<div id="pinnedFooter" class="pinnedFooter pinnedFooterClosed" align="center">
+
+	<!-- Lightbox headers -->
+	<div style="display: table; width: 960px; margin-right: 14px;" align="center">
+		<div id="title_recents" class="recentlyViewedHeader recentlyViewedTxt recentlyViewedTxtLink" onclick="javascript: lightbox.showLightbox('favorites','recents');">
+			<div style="display: table-cell; color: #0084d8;"><img src="{site_url}graphics/site/mini_zoom.png" width="9" height="9">&nbsp;&nbsp;RECENTLY VIEWED IMAGES</div>
+			<div style="display: table-cell;" id="count_recents"></div>
+		</div>
+		<div id="title_favorites" class="recentlyViewedHeader recentlyViewedTxt recentlyViewedTxtLink" style="padding-right: 20px;"
+			{if logged_in} onclick="javascript: lightbox.showLightbox('recents','favorites');">
+				<div style="display: table-cell;"><img src="{site_url}graphics/site/mini_favorite.png" width="10" height="9">&nbsp;&nbsp;YOUR FAVORITES</div>
+				<div style="display: table-cell;" id="count_favorites"></div></div>
+			{if:else}></div>{/if}
+	</div>
+	
+	<!-- Lightboxes -->
+	<div style="display: table; width: 960px; margin-right: 14px;" align="center">
+		<div id="pinnedFooter_recents" class="pinnedSpacer pinnedSpacerInactive"></div>
+		<div id="pinnedFooter_favorites" class="pinnedSpacer pinnedSpacerInactive"></div>
+	</div>
+	
+	<!-- Close button -->
+	<div style="float: right;">
+		<div style="width: 1056px;">
+			<div class="overlayCloseSpacer" style="float: right; margin-top: 34px; margin-right: 34px;">
+				<div class="overlayClose" onclick="javascript: lightbox.hideLightbox();">x</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+
+<!-- //// IF LOGGED IN - Load recently viewed and saved favorites//// -->
+
+<script type="text/javascript" language="javascript">
+		
+	function lightboxPref (loggedIn,viewPref) {
+
+		if ( toolbox.ismobilesafari() ) { lightbox.killLightBox(); }
+		else {
+
+			lightbox.loadLightbox('{exp:remember_me:get reverse="yes"}','recents');
+
+			if (loggedIn == 'true') { lightbox.loadLightbox('{exp:remember_me:load list="favorites" reverse="yes"}','favorites'); }
+
+		}
+
+		if (viewPref == 'recents') { lightbox.showLightbox('favorites','recents'); }
+		else if (viewPref == 'favorites') { lightbox.showLightbox('recents','favorites'); }
+
+		toolbox.classReplacer('pinnedFooter_recents','pinnedSpacer inactive transparent');
+		toolbox.classReplacer('pinnedFooter_favorites','pinnedSpacer inactive transparent');
+
+	}
+
+</script>
+
+{if logged_in}
+	<script type="text/javascript">lightboxPref('true','{segment_6}');</script>
+{if:else}
+	<script type="text/javascript">lightboxPref('false','{segment_6}');</script>
+{/if}
+	

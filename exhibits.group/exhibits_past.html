@@ -1,0 +1,43 @@
+<?php $pastYear = ''; ?>
+
+{exp:channel:entries
+
+	channel = "exhibit"
+	orderby = "expiration_date"
+	status = "open"
+	limit = "200"
+	sort = "desc"
+	show_future_entries = "no"
+	show_expired = "yes"
+	dynamic = "no"
+	disable = "pagination|category_fields|member_data"
+
+}
+
+	{if current_time > expiration_date}
+
+		<?php
+			$pstYr = '{expiration_date format="%Y"}';
+			if ( $pstYr != $pastYear) {
+				echo '	<div style="display: table; width: 1056px; padding-bottom: 20px;" align="center">
+							<div class="thumbTitleBox" style="text-align: center;">', $pstYr, '</div>
+						</div>';
+			}
+			$pastYear = $pstYr;
+		?>
+
+		<div style="display: table; width: 1056px;" align="center">
+
+			<div class="exhibitInfoBox" style="width: 1056px; height: auto; padding: 40px;">
+				<span class="thumbTitle" style="text-transform: none; font-size: 24px;">{title}</span><br>
+				<span style="text-transform: uppercase;">{exhibit_location}</span><br>
+				{if exhibit_description != ""}
+					<br>
+					{exhibit_description}
+				{/if}
+			</div>
+
+		</div>
+	{/if}
+
+{/exp:channel:entries}

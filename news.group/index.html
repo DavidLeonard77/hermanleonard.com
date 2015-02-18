@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	{embed="global/stage" title="{site_name}"}
+	<script src="{site_url}index.php/news/script"></script>
+</head>
+
+<body>
+
+	<!-- HEADER -->
+	<div style="position: fixed; top: 0px; width: 100%; z-index: 1000;">
+		{embed="global/header"}
+	</div>
+
+	<!-- CONTENT -->
+	<div style="background-image: url('{site_url}graphics/site/noise_dark.png'); background-repeat: repeat;">
+		<div class="galleries galleryTxt" style="width: auto;" align="center">
+			<div class="container" style="padding-top: 48px; padding-bottom: 48px;">
+				<div style="margin-top: 130px;">
+	
+					{exp:channel:entries
+
+						channel = "news"
+						sort = "desc"
+						dynamic = "no"
+						disable = "pagination|category_fields|member_data"
+						status = "Home Page|open"
+
+					}
+
+						<script type="text/javascript">
+
+							news.element['{entry_id}'] = {
+
+								content: news.bulletin('{title}','{bulletin_img}','{bulletin_txt}','{bulletin_link}')
+
+							};
+
+						</script>
+
+					{/exp:channel:entries}
+
+					<div style="display: table-cell; width: 320px;"><div id="1"></div></div>
+					<div style="display: table-cell; width: 320px;"><div id="2"></div></div>
+					<div style="display: table-cell; width: 320px;"><div id="3"></div></div>
+
+					<script type="text/javascript">
+
+						news.col['1'] = { height: document.getElementById('1').offsetHeight };
+						news.col['2'] = { height: document.getElementById('2').offsetHeight };
+						news.col['3'] = { height: document.getElementById('3').offsetHeight };
+
+						// Do it
+						news.postArticles();
+
+					</script>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- FOOTER -->
+	{embed="global/footer"}
+
+</body>
+</html>

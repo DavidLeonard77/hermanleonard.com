@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+	{embed="global/stage" title="{site_name}"}
+
+	<script src="{site_url}scripts/jquery.ez-pinned-footer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="{path=gallery/script}" type="text/javascript" charset="utf-8"></script>
+	<script src="{path=lightbox/script}" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript"> if (toolbox.oldBrowser) { toolbox.docLocation('http://browsehappy.com'); } </script>
+
+</head>
+
+<style type="text/css">
+
+	body { padding-top: 130px; }
+
+</style>
+
+<body onresize="javascript: toolbox.getWindowHeight();" onload="javascript: gallery.loadMore(gallery.moreUrl);">
+
+	<!-- HEADER -->
+	<div style="position: fixed; top: 0px; width: 100%; z-index: 1000;">
+		{embed="global/header"}
+	</div>
+
+	<div style="width: auto;">
+
+		<!-- CATEGORIES -->
+		{embed="exhibits/categories"}
+
+		<!-- THUMBNAILS -->
+		{if logged_in}{embed="exhibits/iscroll"}
+		{if:else}<script type="text/javascript"> toolbox.docLocation('{path="default"}'); </script>{/if}
+
+	</div>
+
+
+	<!-- FOOTER -->
+	<div id="footerBox" class="footerBox" style="padding-top: 0px;" align="center">
+		{embed="global/footer"}
+	</div>
+
+	<!-- LIGHTBOX -->
+	{embed="lightbox/index"}
+
+</body>
+</html>

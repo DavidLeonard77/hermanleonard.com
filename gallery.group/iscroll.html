@@ -1,0 +1,114 @@
+<div id="thumbnailBox" class="thumbnails" style="padding-top: 48px; padding-bottom: 72px;" align="center">
+
+	<!--
+	// VIEW BY NAME
+
+	// Segment_1 = /gallery
+	// Segment_2 = genre
+	// Segment_3 = name group
+	// Segment_4 = name
+	// Segment_5 = availability
+	-->
+
+	<!-- IF SPECIFIC -->
+	{if segment_4 != {embed:view_all}}
+		
+		<!-- get the total count -->
+		{exp:channel:entries
+
+			channel = "image"
+			category = "{segment_2}&{segment_4}"
+			category_group = "{segment_3}"
+			status = "{segment_5}"
+			dynamic = "no"
+			disable = "custom_fields|pagination|category_fields|member_data"
+
+		}{if count == "1"}<?php $imageCount = {absolute_results}; ?>{/if}{/exp:channel:entries}
+
+		<div id="thumbnails_1"></div>
+		
+		<!-- save the page count and increment value -->
+		<script type="text/javascript">
+
+			gallery.imageCount = <?php echo $imageCount; ?>;
+			gallery.incrementTotal = <?php echo $imageCount; ?>;
+			gallery.pageCountTotal = 1;
+			gallery.imageColoumns = 3;
+
+		</script>
+	
+	<!-- IF VIEW ALL -->
+	{if:else}
+
+		<!-- INITIALIZE AND GET THE TOTAL IMAGE COUNT -->
+		<?php $imageCount = 0; ?>
+
+		<!-- get the total count -->
+		{exp:channel:entries
+
+			channel = "image"
+			category = "not {embed:view_all}"
+			category_group = "{segment_3}"
+			status = "{segment_5}"
+			orderby = "title"
+			dynamic = "no"
+			limit = "7000"
+			disable = "custom_fields|pagination|category_fields|member_data"
+
+		}{if count == "1"}<?php $imageCount = {absolute_results}; ?>{/if}{/exp:channel:entries}
+
+		<!-- save save the total image count -->
+		<script type="text/javascript">
+
+			gallery.imageCount = <?php echo $imageCount; ?>;
+
+		</script>
+
+		<!-- CREATE THE PAGES -->
+		<?php
+
+			// Total number of pages based on how many images per page
+			$incrementTotal = 27;
+			$pageCountTotal = ceil($imageCount/$incrementTotal);
+
+			// Initialize the page count
+			$thisPageCount = 1;
+
+			// CREAT THE DIVS WHILE THIS PAGE COUNT IS LESS OR EQUAL TO TOTAL PAGE COUNT
+			while ( $thisPageCount <= $pageCountTotal ) {
+				echo '
+				<div id="thumbnails_', $thisPageCount, '"></div>';
+				$thisPageCount = $thisPageCount+1;
+			}
+
+		?>
+		
+		<!-- save the page count, increment value, and coloumns -->
+		<script type="text/javascript">
+
+			gallery.incrementTotal = <?php echo $incrementTotal; ?>;
+			gallery.pageCountTotal = <?php echo $pageCountTotal; ?>;
+			gallery.imageColoumns = 3;
+
+		</script>
+
+	{/if}
+	
+	<div id="loadMoreBoxSpacer" class="container" style="overflow: hidden; padding-top: 24px; padding-bottom: 48px;">
+		<div id="loadMoreBox" class="loadMoreBox loadMore" onclick="javascript: gallery.loadMore(gallery.moreUrl); gallery.classReplacer('loadMoreBox', 'loadMoreBox');">load more images</div>
+		<div id="loadingMoreBox" class="loadMoreBox">loading images</div>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+
+	gallery.moreUrl = '{site_url}index.php/gallery/thumbnails/{segment_2}/{segment_3}/{embed:view_all}/{segment_4}/{segment_5}/';
+
+	// lazy load with until checkTheEnd returns true
+	$(window).scroll(function(){
+		var checkTheEnd = gallery.endCheck(gallery.pageCount,gallery.pageCountTotal);
+		if (($(window).scrollTop() == $(document).height() - gallery.windowHeight) && (checkTheEnd == false)){ gallery.loadMore(gallery.moreUrl); }
+	});
+
+</script>

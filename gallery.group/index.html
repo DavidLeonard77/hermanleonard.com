@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+	{embed="global/stage" title="{site_name}"}
+
+	<script src="{site_url}scripts/jquery.ez-pinned-footer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="{path=gallery/script}" type="text/javascript" charset="utf-8"></script>
+	<script src="{path=lightbox/script}" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript"> if (toolbox.oldBrowser) { toolbox.docLocation('http://browsehappy.com'); } </script>
+
+</head>
+
+<style type="text/css">
+
+	body { padding-top: 130px; }
+
+</style>
+
+<body onresize="javascript: toolbox.getWindowHeight();" onload="javascript: gallery.loadMore(gallery.moreUrl);">
+
+	<!-- HEADER -->
+	<div style="position: fixed; top: 0px; width: 100%; z-index: 1000;">
+		{embed="global/header"}
+	</div>
+
+	<div style="width: auto;">
+
+		{exp:channel:categories channel="image" category_group="{genre}" show="{segment_2}" style="linear"}
+
+			<!-- CATEGORIES -->
+			{embed="gallery/categories"
+
+				view_all = "{category_description}"
+				genre = "{category_name}"
+
+			}
+
+			<!-- THUMBNAILS -->
+			{embed="gallery/iscroll"
+
+				view_all = "{category_description}"
+				genre = "{category_name}"
+
+			}
+
+		{/exp:channel:categories}
+
+	</div>
+
+	<!-- FOOTER -->
+	<div id="footerBox" class="footerBox" align="center">
+		{embed="global/footer"}
+	</div>
+
+	<!-- LIGHTBOX -->
+	{embed="lightbox/index"}
+
+</body>
+</html>
